@@ -1,0 +1,1349 @@
+Here is the updated code. I have made the following adjustments based on your feedback:
+
+1. **Background Image More Visible:** The overlay opacity has been significantly reduced, and the logo watermark opacity has been increased. The background gradient is now much lighter, allowing the logo to be clearly seen behind the content.
+2. **Buttons Made Smaller:** The padding, font size, and border-radius of both hero buttons have been reduced to make them look more elegant and less oversized.
+3. **Text Remains Sharp:** The text still has strong shadows and pure white color to ensure it remains highly readable against the now more visible background.
+
+Replace your existing file with this updated version:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waload Limited | Innovative Solutions. Endless Possibilities.</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* ----- RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --primary: #0a1f44; /* Deep Navy Blue */
+      --primary-dark: #061530; /* Darker Navy */
+      --secondary: #121212; /* Black */
+      --accent: #0056b3; /* Accent Blue */
+      --light: #f8f9fa;
+      --gray: #5a6b7a;
+      --light-gray: #ecf0f1;
+      --white: #ffffff;
+      --black: #0a0a0a;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      --transition: all 0.25s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: var(--white);
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+    .container {
+      width: 92%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    section { padding: 70px 0; }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: 2.1rem;
+      position: relative;
+      padding-bottom: 14px;
+      margin-bottom: 2rem;
+    }
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      display: inline-block;
+    }
+    .section-title h2:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    p { color: var(--gray); margin-bottom: 1rem; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(10, 31, 68, 0.2);
+    }
+    .btn:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 86, 179, 0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    .btn-sm {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+    }
+
+    /* ----- HEADER (fixed) ----- */
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon img {
+      height: 48px;
+      width: auto;
+      border-radius: 4px;
+    }
+    .logo-text h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0;
+      line-height: 1.2;
+    }
+    .logo-text h1 span { color: var(--accent); }
+    .tagline {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.3px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      align-items: center;
+    }
+    nav ul li a {
+      font-weight: 600;
+      color: var(--secondary);
+      transition: var(--transition);
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+    }
+    nav ul li a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .auth-buttons {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .auth-buttons .btn {
+      padding: 8px 22px;
+      font-size: 0.9rem;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.7rem;
+      color: var(--primary);
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+    .mobile-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      border-top: 1px solid var(--light-gray);
+      display: none;
+      z-index: 999;
+      padding: 16px 0;
+    }
+    .mobile-dropdown.active {
+      display: block;
+      animation: slideDown 0.25s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .mobile-dropdown ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+    .mobile-dropdown ul li {
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .mobile-dropdown ul li:last-child { border-bottom: none; }
+    .mobile-dropdown ul li a {
+      display: block;
+      padding: 14px 0;
+      font-weight: 600;
+      color: var(--secondary);
+      transition: var(--transition);
+    }
+    .mobile-dropdown ul li a:hover {
+      color: var(--accent);
+      padding-left: 8px;
+    }
+    .mobile-auth {
+      padding: 16px 20px 0;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--light-gray);
+      margin-top: 12px;
+    }
+
+    /* ============================================================
+       IMPROVED HERO SECTION - MORE VISIBLE BACKGROUND
+       ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 160px 0 90px;
+      margin-top: 72px;
+      overflow: hidden;
+      /* Lighter gradient so the background logo shows through clearly */
+      background: linear-gradient(135deg, #0d2a5e 0%, #0a1f44 50%, #061530 100%);
+    }
+    
+    /* Subtle grid pattern overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-bg-logo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.35; /* Increased opacity to make logo more visible */
+      pointer-events: none;
+    }
+    
+    .hero-bg-logo img {
+      width: 80%;
+      max-width: 900px;
+      height: auto;
+      object-fit: contain;
+      /* Reduced filter strength to keep it clean */
+      filter: brightness(1.1) contrast(1.1) drop-shadow(0 0 40px rgba(0, 86, 179, 0.3));
+    }
+    
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* Much lighter overlay so the background image is clearly visible */
+      background: radial-gradient(circle at center, rgba(10, 31, 68, 0.25) 0%, rgba(10, 31, 68, 0.6) 100%);
+      z-index: 1;
+    }
+    
+    .hero .container {
+      position: relative;
+      z-index: 3;
+    }
+    
+    .hero h1 {
+      color: #ffffff;
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9); /* Strong shadow for readability */
+    }
+    .hero p {
+      color: #ffffff; /* Pure white for max contrast */
+      max-width: 750px;
+      margin: 0 auto 35px;
+      font-size: 1.2rem;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9); /* Strong shadow for readability */
+      font-weight: 400;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Hero Primary Button - Now smaller and more elegant */
+    .hero-btn-primary {
+      display: inline-block;
+      padding: 14px 32px; /* Reduced padding */
+      background: var(--accent); /* Bright accent blue */
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem; /* Smaller font size */
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 86, 179, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero-btn-primary:hover {
+      background: #0066cc;
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(0, 86, 179, 0.5);
+    }
+
+    /* Hero Secondary Button - Solid White, instantly visible, smaller */
+    .hero-btn-secondary {
+      display: inline-block;
+      padding: 14px 32px; /* Reduced padding */
+      background: #ffffff;
+      color: var(--primary); /* Navy text on white */
+      border: 2px solid #ffffff;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem; /* Smaller font size */
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero-btn-secondary:hover {
+      background: transparent;
+      color: #ffffff;
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(255, 255, 255, 0.2);
+    }
+    /* ============================================================ */
+
+    /* ----- SERVICES GRID ----- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .service-card {
+      padding: 32px 24px;
+      text-align: center;
+      border-top: 5px solid var(--accent);
+      border-radius: 16px 16px 8px 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: block;
+      color: inherit;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .service-card:hover {
+      background: var(--light);
+      transform: translateY(-5px);
+    }
+    .service-icon {
+      font-size: 2.8rem;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .service-card .division-name {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    /* ----- DIVISIONS SECTION ----- */
+    .property-section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .property-section-title h2 {
+      font-size: 2.4rem;
+      display: inline-block;
+      color: var(--primary);
+    }
+    .property-section-title h2:after {
+      width: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .property-section-title p {
+      color: var(--gray);
+      font-size: 1.05rem;
+      margin-top: 8px;
+    }
+
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .category-tab {
+      padding: 10px 28px;
+      background: var(--light);
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    .category-tab:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .category-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .property-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--light-gray);
+    }
+    .property-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+    }
+    .property-img-wrapper {
+      position: relative;
+      height: 210px;
+      width: 100%;
+      overflow: hidden;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .property-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .property-info {
+      padding: 20px 22px 24px;
+    }
+    .property-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+    .property-price {
+      color: var(--accent);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .property-description {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin: 12px 0 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--light-gray);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .property-tag {
+      display: inline-block;
+      background: var(--light-gray);
+      padding: 2px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+    .property-division {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 2px 12px;
+      border-radius: 12px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-left: 6px;
+      text-transform: uppercase;
+    }
+    .property-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .property-actions .btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 0.85rem;
+    }
+
+    /* VALUES */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 24px;
+      margin-top: 18px;
+    }
+    .value-card {
+      background: var(--white);
+      padding: 28px 16px;
+      text-align: center;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .value-letter {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 auto 16px;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      padding: 30px 28px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border-left: 5px solid var(--accent);
+      transition: var(--transition);
+    }
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    }
+    .testimonial-text {
+      font-style: italic;
+      color: var(--secondary);
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .testimonial-name {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+    .testimonial-role {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+    .testimonial-stars {
+      color: #f39c12;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* MEET OUR CEO */
+    .ceo-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+    .ceo-image {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      background: var(--light);
+    }
+    .ceo-image img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+    .ceo-info h3 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .ceo-title {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+    .ceo-bio {
+      color: var(--gray);
+      line-height: 1.8;
+    }
+    .ceo-social {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .ceo-social a {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+    .ceo-social a:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .contact-icon {
+      color: var(--accent);
+      font-size: 1.3rem;
+      width: 28px;
+      margin-top: 4px;
+    }
+    .form-container {
+      background: var(--white);
+      padding: 28px 30px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #dde1e5;
+      border-radius: 40px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: var(--light);
+    }
+    .form-control:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.12);
+      background: white;
+    }
+    textarea.form-control {
+      border-radius: 20px;
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    /* FOOTER - black background */
+    footer {
+      background: var(--black);
+      color: rgba(255, 255, 255, 0.85);
+      padding: 60px 0 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-column h3 {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    .footer-column ul {
+      list-style: none;
+    }
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+    .footer-column ul li a {
+      color: rgba(255, 255, 255, 0.7);
+      transition: var(--transition);
+    }
+    .footer-column ul li a:hover {
+      color: var(--accent);
+      padding-left: 6px;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+    .motto {
+      color: var(--accent);
+      font-weight: 600;
+      font-style: italic;
+      margin-top: 10px;
+    }
+    .bg-light { background: var(--light); }
+    .bg-dark { background: var(--secondary); color: white; }
+    .bg-dark .section-title h2 { color: white; }
+    .bg-dark .section-title p { color: rgba(255,255,255,0.8); }
+
+    @media (max-width: 992px) {
+      .hero h1 { font-size: 2.4rem; }
+      .ceo-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .ceo-image img { height: 280px; }
+    }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav:not(.mobile-dropdown) { display: none; }
+      .auth-buttons:not(.mobile-auth .auth-buttons) { display: none; }
+      .hero { padding: 130px 0 60px; margin-top: 64px; min-height: auto; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      section { padding: 50px 0; }
+      .container { width: 96%; }
+      .hero-bg-logo img { width: 100%; }
+      .ceo-image img { height: 220px; }
+      .category-tabs { gap: 8px; }
+      .category-tab { padding: 8px 18px; font-size: 0.8rem; }
+      
+      /* Adjust Hero buttons for mobile - still smaller */
+      .hero-btn-primary, .hero-btn-secondary {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+        width: 100%;
+      }
+      .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+    @media (min-width: 769px) {
+      .mobile-dropdown { display: none !important; }
+      .mobile-auth { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .logo-text h1 { font-size: 1.2rem; }
+      .logo-icon img { height: 38px; }
+      .btn { padding: 10px 20px; font-size: 0.9rem; }
+    }
+    .text-center { text-align: center; }
+    .mt-2 { margin-top: 2rem; }
+    .mt-3 { margin-top: 3rem; }
+    .mb-2 { margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container header-container">
+      <button class="menu-toggle" id="menuToggle" aria-label="menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">
+        <div class="logo-icon">
+          <img src="logo.jpeg" alt="Waload Limited logo" />
+        </div>
+        <div class="logo-text">
+          <h1>Waload <span>Limited</span></h1>
+          <div class="tagline">Innovative Solutions. Endless Possibilities.</div>
+        </div>
+      </div>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Our Divisions</a></li>
+          <li><a href="#divisions">Divisions</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#ceo">CEO</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <a href="#" class="btn btn-outline" style="padding:8px 22px;">Client</a>
+        <a href="#" class="btn" style="padding:8px 22px;">Partner</a>
+      </div>
+      <div class="mobile-dropdown" id="mobileDropdown">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Our Divisions</a></li>
+          <li><a href="#divisions">Divisions</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#ceo">CEO</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-auth">
+          <a href="#" class="btn btn-outline" style="flex:1;">Client</a>
+          <a href="#" class="btn" style="flex:1;">Partner</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- IMPROVED HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-bg-logo">
+      <img src="logo.jpeg" alt="Waload Limited logo background" />
+    </div>
+    <div class="container">
+      <h1>Innovative Solutions. Endless Possibilities.</h1>
+      <p>Waload Limited is a diversified company delivering exceptional services across technology, media, agriculture, real estate, transport, and professional training for individuals and organizations across Nigeria.</p>
+      <div class="hero-buttons">
+        <a href="#services" class="hero-btn-primary">Explore Our Divisions</a>
+        <a href="#contact" class="hero-btn-secondary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>About Waload Limited</h2>
+      </div>
+      <div class="contact-grid" style="align-items:start;">
+        <div>
+          <h3>Who We Are</h3>
+          <p><strong>WALOAD LIMITED</strong> is a diversified company delivering innovative solutions across technology, media, real estate, professional training, agriculture, and transport. Established with a commitment to excellence, integrity, and customer satisfaction.</p>
+          <p>Through our divisions — <strong>WALOAD TECH</strong>, <strong>WALOAD PHOTO & VIDEOGRAPHY</strong>, <strong>WALOAD ACADEMICS</strong>, <strong>WALOAD REAL ESTATE</strong>, <strong>WALOAD AGRO</strong>, <strong>WALOAD LINE</strong>, and <strong>WALOAD ESSENTIALS</strong> — we offer wide-ranging solutions that create value and support sustainable development.</p>
+          <div class="motto" style="font-size:1.1rem;">Innovating with Integrity.</div>
+        </div>
+        <div>
+          <h3>Corporate Statements</h3>
+          <div style="background:var(--light); padding:20px 24px; border-radius:16px; margin-bottom:20px;">
+            <h4 style="color:var(--accent);">Mission</h4>
+            <p>To provide exceptional products, professional services, and practical solutions that improve lives, create opportunities, and contribute to sustainable economic growth.</p>
+          </div>
+          <div style="background:var(--light); padding:20px 24px; border-radius:16px; margin-bottom:20px;">
+            <h4 style="color:var(--accent);">Vision</h4>
+            <p>To become a leading multi-sector organization recognized for excellence, innovation, professionalism, and customer satisfaction across Africa and beyond.</p>
+          </div>
+          <div style="background:var(--light); padding:20px 24px; border-radius:16px;">
+            <h4 style="color:var(--accent);">Our Promises</h4>
+            <p>Consistently deliver value, quality, and excellence. Operate with integrity, transparency, and professionalism. Exceed expectations through dependable solutions.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:2.5rem;">
+        <h3 style="text-align:center; margin-bottom:1.5rem;">Our Core Values</h3>
+        <div class="values-grid">
+          <div class="value-card"><div class="value-letter">W</div><h4>Willingness</h4><p>A can-do attitude and a commitment to finding solutions.</p></div>
+          <div class="value-card"><div class="value-letter">A</div><h4>Adaptability</h4><p>Flexibility to evolve and excel in any industry or terrain.</p></div>
+          <div class="value-card"><div class="value-letter">L</div><h4>Leadership</h4><p>Setting high standards and inspiring progress in all we do.</p></div>
+          <div class="value-card"><div class="value-letter">O</div><h4>Opportunity</h4><p>An opportunistic outlook, leveraging every chance to create value.</p></div>
+          <div class="value-card"><div class="value-letter">A</div><h4>Ambition</h4><p>A "never die" attitude, relentlessly pursuing excellence.</p></div>
+          <div class="value-card"><div class="value-letter">D</div><h4>Dedication</h4><p>Committed to exceeding client expectations and achieving goals.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES with division names as titles -->
+  <section id="services" class="bg-light">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Services</h2>
+        <p>Comprehensive solutions across our seven specialized divisions</p>
+      </div>
+      <div class="services-grid">
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+          <h3>Technology &amp; Cybersecurity</h3>
+          <p>Software Engineering, Data Analysis, Cybersecurity, CAC Registration, and NIN Registration.</p>
+          <span class="division-name">WALOAD TECH</span>
+        </a>
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-camera-retro"></i></div>
+          <h3>Photo &amp; Videography</h3>
+          <p>Professional photography and videography services for events, commercials, and personal projects.</p>
+          <span class="division-name">WALOAD PHOTO & VIDEOGRAPHY</span>
+        </a>
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Training &amp; Development</h3>
+          <p>Professional training in technology, photography, and videography to empower the next generation of experts.</p>
+          <span class="division-name">WALOAD ACADEMICS</span>
+        </a>
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-building"></i></div>
+          <h3>Real Estate</h3>
+          <p>Comprehensive real estate services, including property sales, management, and consultation.</p>
+          <span class="division-name">WALOAD REAL ESTATE</span>
+        </a>
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-seedling"></i></div>
+          <h3>Agriculture &amp; Agro-Allied</h3>
+          <p>Innovative agricultural solutions and services to support sustainable farming and food production.</p>
+          <span class="division-name">WALOAD AGRO</span>
+        </a>
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-truck-moving"></i></div>
+          <h3>Transport &amp; Logistics</h3>
+          <p>Reliable and efficient transportation and logistics services for people and goods.</p>
+          <span class="division-name">WALOAD LINE</span>
+        </a>
+        <a href="#divisions" class="service-card">
+          <div class="service-icon"><i class="fas fa-shopping-bag"></i></div>
+          <h3>Essentials</h3>
+          <p>Providing essential goods and services to meet everyday needs with quality and convenience.</p>
+          <span class="division-name">WALOAD ESSENTIALS</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISIONS - Cards for each division -->
+  <section id="divisions">
+    <div class="container">
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categories-divisions">
+        <span class="category-tab active" data-category="all">All Divisions</span>
+        <span class="category-tab" data-category="tech">Waload Tech</span>
+        <span class="category-tab" data-category="photo">Waload Photo & Video</span>
+        <span class="category-tab" data-category="academics">Waload Academics</span>
+        <span class="category-tab" data-category="realestate">Waload Real Estate</span>
+        <span class="category-tab" data-category="agro">Waload Agro</span>
+        <span class="category-tab" data-category="line">Waload Line</span>
+        <span class="category-tab" data-category="essentials">Waload Essentials</span>
+      </div>
+
+      <!-- Our Divisions Heading -->
+      <div class="property-section-title">
+        <h2>Explore Our Divisions</h2>
+        <p>Discover the wide range of services offered by Waload Limited</p>
+      </div>
+
+      <!-- Divisions Grid -->
+      <div class="property-grid" id="divisionListings">
+        <!-- JS will populate -->
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="bg-dark">
+    <div class="container">
+      <div class="section-title">
+        <h2 style="color:white;">What People Say About Us</h2>
+        <p style="color:rgba(255,255,255,0.8);">Real feedback from our valued clients and partners</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p class="testimonial-text">"Waload Tech developed our company's web application with incredible precision. Their cybersecurity expertise gave us complete peace of mind. Highly recommended!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JA</div>
+            <div>
+              <div class="testimonial-name">John Adebayo</div>
+              <div class="testimonial-role">CEO, Adebayo Ventures</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p class="testimonial-text">"The training programs at Waload Academics transformed our team's technical capabilities. The practical approach and expert mentorship made all the difference."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MO</div>
+            <div>
+              <div class="testimonial-name">Mary Okafor</div>
+              <div class="testimonial-role">IT Manager, GeoVision Consulting</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p class="testimonial-text">"I purchased my dream home through Waload Real Estate. The documentation process was seamless, and their team ensured every detail was perfect. Trustworthy and reliable!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">CE</div>
+            <div>
+              <div class="testimonial-name">Chidi Eze</div>
+              <div class="testimonial-role">Client, Lagos</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p class="testimonial-text">"Waload Photo & Videography captured our wedding beautifully. Their professionalism and creativity exceeded all our expectations. We cherish the memories they created."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">KO</div>
+            <div>
+              <div class="testimonial-name">Kemi Oladipo</div>
+              <div class="testimonial-role">Entrepreneur, Abuja</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEET OUR CEO -->
+  <section id="ceo">
+    <div class="container">
+      <div class="section-title">
+        <h2>Meet Our CEO</h2>
+        <p>Visionary leadership driving excellence and innovation</p>
+      </div>
+      <div class="ceo-grid">
+        <div class="ceo-image">
+          <!-- Using the provided headshot of Igbekele Olumide David -->
+          <img src="ceo.jpeg" alt="Igbeleke Olumide David - CEO of Waload Limited" />
+        </div>
+        <div class="ceo-info">
+          <h3>Igbeleke Olumide David</h3>
+          <div class="ceo-title">Founder &amp; Chief Executive Officer</div>
+          <div class="ceo-bio">
+            <p>Igbeleke Olumide David is a highly skilled and versatile professional with expertise in petroleum technology, software engineering, data analysis, and cybersecurity. He holds a Higher National Diploma in Petroleum Engineering and Geoscience from the Petroleum Training Institute and is certified in Software, Data, and Cybersecurity Engineering from Newdich Technology.</p>
+            <p>Under his visionary leadership, Waload Limited has grown into a diversified conglomerate with interests in technology, media, real estate, training, agriculture, and transport. His commitment to adaptability, integrity, and innovation has been the driving force behind the company's success.</p>
+            <p>Olumide is also a passionate mentor and has trained individuals in web development, data analysis, and cybersecurity. He believes in using technology to solve real-world problems and is dedicated to contributing to sustainable development across Africa.</p>
+          </div>
+          <div class="ceo-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="bg-light">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact Us</h2>
+        <p>Get in touch for professional services</p>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <h3>Contact Information</h3>
+          <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div><h4>Phone</h4><p>+234 901 579 9028</p></div></div>
+          <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><p>igbekeleholumide1@gmail.com</p></div></div>
+          <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Office</h4><p>No 6, Olorunkole Street, Ode-Aye, Ktp. LGA, Ondo State, Nigeria.</p></div></div>
+          <div class="motto mt-2">Innovating with Integrity.</div>
+        </div>
+        <div class="form-container">
+          <h3>Send Message</h3>
+          <form action="#" method="post" id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Your Name</label>
+              <input type="text" name="name" id="contactName" class="form-control" placeholder="Full name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactEmail">Email</label>
+              <input type="email" name="email" id="contactEmail" class="form-control" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactSubject">Subject</label>
+              <input type="text" name="heading" id="contactSubject" class="form-control" placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactMessage">Message</label>
+              <textarea id="contactMessage" name="message" class="form-control" placeholder="Your message..." required></textarea>
+            </div>
+            <button type="submit" class="btn" style="width:100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER - black background -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>Waload Limited</h3>
+          <p style="color:rgba(255,255,255,0.7);">A diversified company delivering innovative solutions across technology, media, agriculture, real estate, transport, and professional training.</p>
+          <div class="motto">Innovating with Integrity.</div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#services">Our Divisions</a></li><li><a href="#divisions">Divisions</a></li><li><a href="#testimonials">Testimonials</a></li><li><a href="#ceo">CEO</a></li><li><a href="#contact">Contact</a></li></ul>
+        </div>
+        <div class="footer-column">
+          <h3>Divisions</h3>
+          <ul>
+            <li><a href="#divisions">WALOAD TECH</a></li>
+            <li><a href="#divisions">WALOAD PHOTO & VIDEOGRAPHY</a></li>
+            <li><a href="#divisions">WALOAD ACADEMICS</a></li>
+            <li><a href="#divisions">WALOAD REAL ESTATE</a></li>
+            <li><a href="#divisions">WALOAD AGRO</a></li>
+            <li><a href="#divisions">WALOAD LINE</a></li>
+            <li><a href="#divisions">WALOAD ESSENTIALS</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Connect</h3>
+          <ul><li><i class="fas fa-phone"></i> +234 901 579 9028</li><li><i class="fas fa-envelope"></i> igbekeleholumide1@gmail.com</li><li>No 6, Olorunkole Street, Ode-Aye, Ktp. LGA, Ondo State</li></ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2026 Waload Limited. All rights reserved. | Developed by OluDev</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileDropdown = document.getElementById('mobileDropdown');
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileDropdown.classList.toggle('active');
+        this.innerHTML = mobileDropdown.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      });
+      document.addEventListener('click', function(e) {
+        if (!mobileDropdown.contains(e.target) && !menuToggle.contains(e.target)) {
+          mobileDropdown.classList.remove('active');
+          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileDropdown.classList.contains('active')) {
+          mobileDropdown.classList.remove('active');
+          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+      });
+      // smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+          }
+          mobileDropdown.classList.remove('active');
+          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+      });
+
+      // ----- DIVISIONS - Data for each division -----
+      const divisionListings = document.getElementById('divisionListings');
+      const whatsappNumber = '2349015799028';
+
+      const divisionData = {
+        products: [
+          { id: 101, name: 'Waload Tech', category: 'tech', price: 'Contact Us', desc: 'Software Engineering, Data Analysis, Cybersecurity, CAC Registration, and NIN Registration.', 
+            image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop&crop=center', tag: 'Technology' },
+          { id: 102, name: 'Waload Photo & Videography', category: 'photo', price: 'Contact Us', desc: 'Professional photography and videography services for events, commercials, and personal projects.', 
+            image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=250&fit=crop&crop=center', tag: 'Media' },
+          { id: 103, name: 'Waload Academics', category: 'academics', price: 'Contact Us', desc: 'Professional training in technology, photography, and videography to empower the next generation of experts.', 
+            image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop&crop=center', tag: 'Training' },
+          { id: 104, name: 'Waload Real Estate', category: 'realestate', price: 'Contact Us', desc: 'Comprehensive real estate services, including property sales, management, and consultation.', 
+            image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=250&fit=crop&crop=center', tag: 'Real Estate' },
+          { id: 105, name: 'Waload Agro', category: 'agro', price: 'Contact Us', desc: 'Innovative agricultural solutions and services to support sustainable farming and food production.', 
+            image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop&crop=center', tag: 'Agriculture' },
+          { id: 106, name: 'Waload Line', category: 'line', price: 'Contact Us', desc: 'Reliable and efficient transportation and logistics services for people and goods.', 
+            image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=400&h=250&fit=crop&crop=center', tag: 'Transport' },
+          { id: 107, name: 'Waload Essentials', category: 'essentials', price: 'Contact Us', desc: 'Providing essential goods and services to meet everyday needs with quality and convenience.', 
+            image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=250&fit=crop&crop=center', tag: 'Essentials' },
+        ]
+      };
+
+      function loadDivisions() {
+        const container = document.getElementById('divisionListings');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        divisionData.products.forEach(p => {
+          const card = createDivisionCard(p);
+          container.appendChild(card);
+        });
+      }
+
+      function createDivisionCard(division) {
+        const div = document.createElement('div');
+        div.className = 'property-card';
+        div.dataset.category = division.category;
+        
+        div.innerHTML = `
+          <div class="property-img-wrapper">
+            <img src="${division.image}" alt="${division.name}" class="property-img">
+          </div>
+          <div class="property-info">
+            <span class="property-tag">${division.tag}</span>
+            <span class="property-division">WALOAD DIVISION</span>
+            <h3>${division.name}</h3>
+            <div class="property-price">${division.price}</div>
+            <p class="property-description">${division.desc}</p>
+            <div class="property-actions">
+              <button class="btn btn-sm buy-btn" data-name="${division.name}">Enquire Now</button>
+            </div>
+          </div>
+        `;
+        
+        // WhatsApp enquire button
+        const buyBtn = div.querySelector('.buy-btn');
+        buyBtn.addEventListener('click', function() {
+          const name = this.dataset.name;
+          const msg = encodeURIComponent(`Hello Waload Limited, I am interested in your ${name} services.`);
+          window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
+        });
+        
+        return div;
+      }
+
+      // Category filtering for divisions
+      function filterDivisions(category) {
+        const container = document.getElementById('divisionListings');
+        if (!container) return;
+        const cards = container.querySelectorAll('.property-card');
+        cards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // Load divisions
+      loadDivisions();
+
+      // Category tab events
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          const category = this.dataset.category;
+          filterDivisions(category);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```
