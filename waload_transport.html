@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waload Line (Transport) | Waload Limited</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* ----- RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --primary: #0a1f44; /* Deep Navy Blue */
+      --primary-dark: #061530; /* Darker Navy */
+      --secondary: #121212; /* Black */
+      --accent: #0056b3; /* Accent Blue */
+      --light: #f8f9fa;
+      --gray: #5a6b7a;
+      --light-gray: #ecf0f1;
+      --white: #ffffff;
+      --black: #0a0a0a;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      --transition: all 0.25s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: var(--white);
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+    .container {
+      width: 92%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    section { padding: 70px 0; }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: 2.1rem;
+      position: relative;
+      padding-bottom: 14px;
+      margin-bottom: 2rem;
+    }
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      display: inline-block;
+    }
+    .section-title h2:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    p { color: var(--gray); margin-bottom: 1rem; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(10, 31, 68, 0.2);
+    }
+    .btn:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 86, 179, 0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    .btn-sm {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+    }
+
+    /* ----- HEADER (fixed) ----- */
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon img {
+      height: 48px;
+      width: auto;
+      border-radius: 4px;
+    }
+    .logo-text h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0;
+      line-height: 1.2;
+    }
+    .logo-text h1 span { color: var(--accent); }
+    .tagline {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.3px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      align-items: center;
+    }
+    nav ul li a {
+      font-weight: 600;
+      color: var(--secondary);
+      transition: var(--transition);
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+    }
+    nav ul li a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .auth-buttons {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .auth-buttons .btn {
+      padding: 8px 22px;
+      font-size: 0.9rem;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.7rem;
+      color: var(--primary);
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+    .mobile-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      border-top: 1px solid var(--light-gray);
+      display: none;
+      z-index: 999;
+      padding: 16px 0;
+    }
+    .mobile-dropdown.active {
+      display: block;
+      animation: slideDown 0.25s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .mobile-dropdown ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+    .mobile-dropdown ul li {
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .mobile-dropdown ul li:last-child { border-bottom: none; }
+    .mobile-dropdown ul li a {
+      display: block;
+      padding: 14px 0;
+      font-weight: 600;
+      color: var(--secondary);
+      transition: var(--transition);
+    }
+    .mobile-dropdown ul li a:hover {
+      color: var(--accent);
+      padding-left: 8px;
+    }
+    .mobile-auth {
+      padding: 16px 20px 0;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--light-gray);
+      margin-top: 12px;
+    }
+
+    /* ----- HERO for service pages with logo as background ----- */
+    .service-hero {
+      position: relative;
+      padding: 140px 0 60px;
+      margin-top: 72px;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      background-color: var(--primary);
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .service-hero .hero-bg-logo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .service-hero .hero-bg-logo img {
+      width: 75%;
+      max-width: 700px;
+      height: auto;
+      object-fit: contain;
+      filter: brightness(1.6) contrast(1.2) drop-shadow(0 0 30px rgba(0, 86, 179, 0.1));
+    }
+    .service-hero .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, rgba(10, 31, 68, 0.85) 0%, rgba(10, 31, 68, 0.7) 100%);
+      z-index: 1;
+    }
+    .service-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+    .service-hero h1 {
+      color: white;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .service-hero p {
+      color: rgba(255,255,255,0.9);
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+    }
+    .service-hero .badge {
+      display: inline-block;
+      background: var(--accent);
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .service-hero .icon-large {
+      font-size: 4rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-shadow: 0 0 30px rgba(0, 86, 179, 0.3);
+    }
+
+    /* Category tabs */
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .category-tab {
+      padding: 10px 28px;
+      background: var(--light);
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      color: var(--gray);
+    }
+    .category-tab:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .category-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Product grid - "Our Services" heading */
+    .product-section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .product-section-title h2 {
+      font-size: 2.4rem;
+      display: inline-block;
+      color: var(--primary);
+    }
+    .product-section-title h2:after {
+      width: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .product-section-title p {
+      color: var(--gray);
+      font-size: 1.05rem;
+      margin-top: 8px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 30px;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--light-gray);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+    }
+    .product-image {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      background: var(--light);
+    }
+    .product-info {
+      padding: 20px 22px 24px;
+    }
+    .product-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+    .product-price {
+      color: var(--accent);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .product-desc {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-tag {
+      display: inline-block;
+      background: var(--light-gray);
+      padding: 2px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .product-actions .btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 0.85rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: rgba(255, 255, 255, 0.85);
+      padding: 60px 0 30px;
+      margin-top: 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-column h3 {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    .footer-column ul { list-style: none; }
+    .footer-column ul li { margin-bottom: 10px; }
+    .footer-column ul li a {
+      color: rgba(255, 255, 255, 0.7);
+      transition: var(--transition);
+    }
+    .footer-column ul li a:hover {
+      color: var(--accent);
+      padding-left: 6px;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+    .motto {
+      color: var(--accent);
+      font-weight: 600;
+      font-style: italic;
+      margin-top: 10px;
+    }
+    .bg-light { background: var(--light); }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav:not(.mobile-dropdown) { display: none; }
+      .auth-buttons:not(.mobile-auth .auth-buttons) { display: none; }
+      .service-hero { padding: 120px 0 40px; margin-top: 64px; min-height: 50vh; }
+      .service-hero h1 { font-size: 2rem; }
+      section { padding: 40px 0; }
+      .container { width: 96%; }
+      .category-tabs { gap: 8px; }
+      .category-tab { padding: 8px 18px; font-size: 0.85rem; }
+      .service-hero .hero-bg-logo img { width: 95%; }
+      .product-section-title h2 { font-size: 1.8rem; }
+    }
+    @media (min-width: 769px) {
+      .mobile-dropdown { display: none !important; }
+      .mobile-auth { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .logo-text h1 { font-size: 1.2rem; }
+      .logo-icon img { height: 38px; }
+    }
+    .text-center { text-align: center; }
+    .mt-2 { margin-top: 2rem; }
+    .mt-3 { margin-top: 3rem; }
+    .mb-2 { margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-container">
+      <button class="menu-toggle" id="menuToggle" aria-label="menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">
+        <div class="logo-icon">
+          <!-- Waload Logo -->
+          <img src="logo.jpeg" alt="Waload Limited logo" />
+        </div>
+        <div class="logo-text">
+          <h1>Waload <span>Limited</span></h1>
+          <div class="tagline">Innovative Solutions. Endless Possibilities.</div>
+        </div>
+      </div>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <a href="#" class="btn btn-outline" style="padding:8px 22px;">Book</a>
+        <a href="#" class="btn" style="padding:8px 22px;">Partner</a>
+      </div>
+      <div class="mobile-dropdown" id="mobileDropdown">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-auth">
+          <a href="#" class="btn btn-outline" style="flex:1;">Book</a>
+          <a href="#" class="btn" style="flex:1;">Partner</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== WALOAD LINE SERVICE PAGE ==================== -->
+  <section id="service-line" class="service-page" style="display:block;">
+    <div class="service-hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-bg-logo">
+        <img src="logo.jpeg" alt="Waload Limited logo background" />
+      </div>
+      <div class="container">
+        <div class="icon-large"><i class="fas fa-truck-moving"></i></div>
+        <div class="badge">WALOAD LINE</div>
+        <h1>Transport &amp; Logistics Solutions</h1>
+        <p>Reliable and efficient transportation and logistics services for people and goods. From local deliveries to interstate haulage, we move your world with precision and care.</p>
+      </div>
+    </div>
+    <div class="container" style="padding-top:40px;">
+      
+      <!-- Categories -->
+      <div class="category-tabs" id="categories-line">
+        <span class="category-tab active" data-category="all">All Services</span>
+        <span class="category-tab" data-category="passenger">Passenger Transport</span>
+        <span class="category-tab" data-category="logistics">Logistics &amp; Haulage</span>
+        <span class="category-tab" data-category="delivery">Delivery Services</span>
+        <span class="category-tab" data-category="special">Specialized Transport</span>
+      </div>
+
+      <!-- Our Services Heading -->
+      <div class="product-section-title">
+        <h2>Our Services</h2>
+        <p>Explore our comprehensive transport and logistics services</p>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="product-grid" id="products-line"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="bg-light" style="padding-top:40px;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact Us</h2>
+        <p>Get in touch for professional transport and logistics services</p>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:40px;">
+        <div>
+          <h3>Contact Information</h3>
+          <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:22px;">
+            <div style="color:var(--accent); font-size:1.3rem; width:28px; margin-top:4px;"><i class="fas fa-phone"></i></div>
+            <div><h4>Phone</h4><p>+234 901 579 9028</p></div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:22px;">
+            <div style="color:var(--accent); font-size:1.3rem; width:28px; margin-top:4px;"><i class="fas fa-envelope"></i></div>
+            <div><h4>Email</h4><p>igbekeleholumide1@gmail.com</p></div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:22px;">
+            <div style="color:var(--accent); font-size:1.3rem; width:28px; margin-top:4px;"><i class="fas fa-map-marker-alt"></i></div>
+            <div><h4>Office</h4><p>No 6, Olorunkole Street, Ode-Aye, Ktp. LGA, Ondo State, Nigeria.</p></div>
+          </div>
+          <div class="motto">Innovating with Integrity.</div>
+        </div>
+        <div style="background:var(--white); padding:28px 30px; border-radius:20px; box-shadow:var(--shadow);">
+          <h3>Send Message</h3>
+          <form action="#" method="post">
+            <div style="margin-bottom:20px;">
+              <label style="font-weight:600; display:block; margin-bottom:6px; color:var(--primary);">Your Name</label>
+              <input type="text" name="name" class="form-control" style="width:100%; padding:12px 16px; border:1px solid #dde1e5; border-radius:40px; font-size:1rem; background:var(--light);" placeholder="Full name" required>
+            </div>
+            <div style="margin-bottom:20px;">
+              <label style="font-weight:600; display:block; margin-bottom:6px; color:var(--primary);">Email</label>
+              <input type="email" name="email" class="form-control" style="width:100%; padding:12px 16px; border:1px solid #dde1e5; border-radius:40px; font-size:1rem; background:var(--light);" placeholder="your@email.com" required>
+            </div>
+            <div style="margin-bottom:20px;">
+              <label style="font-weight:600; display:block; margin-bottom:6px; color:var(--primary);">Subject</label>
+              <input type="text" name="heading" class="form-control" style="width:100%; padding:12px 16px; border:1px solid #dde1e5; border-radius:40px; font-size:1rem; background:var(--light);" placeholder="Subject" required>
+            </div>
+            <div style="margin-bottom:20px;">
+              <label style="font-weight:600; display:block; margin-bottom:6px; color:var(--primary);">Message</label>
+              <textarea name="message" class="form-control" style="width:100%; padding:12px 16px; border:1px solid #dde1e5; border-radius:20px; font-size:1rem; background:var(--light); min-height:110px; resize:vertical;" placeholder="Your message..." required></textarea>
+            </div>
+            <button type="submit" class="btn" style="width:100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>Waload Limited</h3>
+          <p style="color:rgba(255,255,255,0.7);">A diversified company delivering innovative solutions across technology, media, agriculture, real estate, transport, and professional training.</p>
+          <div class="motto">Innovating with Integrity.</div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#services">Our Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Divisions</h3>
+          <ul>
+            <li><a href="waload-tech.html">WALOAD TECH</a></li>
+            <li><a href="waload-photo.html">WALOAD PHOTO & VIDEOGRAPHY</a></li>
+            <li><a href="waload-academics.html">WALOAD ACADEMICS</a></li>
+            <li><a href="waload-realestate.html">WALOAD REAL ESTATE</a></li>
+            <li><a href="waload-agro.html">WALOAD AGRO</a></li>
+            <li><a href="waload-line.html">WALOAD LINE</a></li>
+            <li><a href="waload-essentials.html">WALOAD ESSENTIALS</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Connect</h3>
+          <ul>
+            <li><i class="fas fa-phone"></i> +234 901 579 9028</li>
+            <li><i class="fas fa-envelope"></i> igbekeleholumide1@gmail.com</li>
+            <li>No 6, Olorunkole Street, Ode-Aye, Ktp. LGA, Ondo State</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2024 Waload Limited. All rights reserved. | Developed by OluDev</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileDropdown = document.getElementById('mobileDropdown');
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileDropdown.classList.toggle('active');
+        this.innerHTML = mobileDropdown.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      });
+      document.addEventListener('click', function(e) {
+        if (!mobileDropdown.contains(e.target) && !menuToggle.contains(e.target)) {
+          mobileDropdown.classList.remove('active');
+          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+      });
+
+      // Load products for line service
+      loadProducts('line');
+
+      // Category filtering
+      document.querySelectorAll('.category-tabs').forEach(tabContainer => {
+        const tabs = tabContainer.querySelectorAll('.category-tab');
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const category = this.dataset.category;
+            const serviceId = tabContainer.id.replace('categories-', '');
+            filterProducts(serviceId, category);
+          });
+        });
+      });
+    });
+
+    // ============================================================
+    // WALOAD LINE - Service Data
+    // Replace the image URLs with your own images
+    // ============================================================
+    const productData = {
+      line: {
+        products: [
+          // Passenger Transport
+          { id: 101, name: 'Interstate Passenger Transport', category: 'passenger', price: 'Contact Us', desc: 'Comfortable and reliable interstate bus services connecting major cities across Nigeria.', 
+            image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=200&fit=crop&crop=center', tag: 'Passenger' },
+          { id: 102, name: 'City Shuttle Services', category: 'passenger', price: 'Contact Us', desc: 'Efficient intra-city shuttle services for daily commuters and group travel.', 
+            image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&h=200&fit=crop&crop=center', tag: 'Passenger' },
+          { id: 103, name: 'Airport Pickup & Drop-off', category: 'passenger', price: 'Contact Us', desc: 'Timely and comfortable airport transfer services for individuals and corporate clients.', 
+            image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&h=200&fit=crop&crop=center', tag: 'Passenger' },
+          { id: 104, name: 'Corporate Staff Transport', category: 'passenger', price: 'Contact Us', desc: 'Dedicated staff bus services for organizations and corporate bodies.', 
+            image: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=400&h=200&fit=crop&crop=center', tag: 'Passenger' },
+          { id: 105, name: 'Event & Group Transport', category: 'passenger', price: 'Contact Us', desc: 'Chartered bus services for weddings, conferences, excursions, and group events.', 
+            image: 'https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=400&h=200&fit=crop&crop=center', tag: 'Passenger' },
+          
+          // Logistics & Haulage
+          { id: 201, name: 'Interstate Haulage', category: 'logistics', price: 'Contact Us', desc: 'Heavy-duty haulage services for goods and cargo across states and regions.', 
+            image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&h=200&fit=crop&crop=center', tag: 'Logistics' },
+          { id: 202, name: 'Container & Cargo Movement', category: 'logistics', price: 'Contact Us', desc: 'Efficient movement of containers and cargo from ports to destinations nationwide.', 
+            image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=400&h=200&fit=crop&crop=center', tag: 'Logistics' },
+          { id: 203, name: 'Warehousing & Storage', category: 'logistics', price: 'Contact Us', desc: 'Secure warehousing and storage solutions for commercial and industrial goods.', 
+            image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop&crop=center', tag: 'Logistics' },
+          { id: 204, name: 'Supply Chain Management', category: 'logistics', price: 'Contact Us', desc: 'End-to-end supply chain management solutions for businesses and organizations.', 
+            image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=400&h=200&fit=crop&crop=center', tag: 'Logistics' },
+          { id: 205, name: 'Distribution Services', category: 'logistics', price: 'Contact Us', desc: 'Reliable distribution services for FMCG, retail, and industrial products.', 
+            image: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=400&h=200&fit=crop&crop=center', tag: 'Logistics' },
+          
+          // Delivery Services
+          { id: 301, name: 'Same-Day Delivery', category: 'delivery', price: 'Contact Us', desc: 'Fast and reliable same-day delivery services for documents, parcels, and packages.', 
+            image: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=400&h=200&fit=crop&crop=center', tag: 'Delivery' },
+          { id: 302, name: 'E-commerce Logistics', category: 'delivery', price: 'Contact Us', desc: 'Complete logistics solutions for online stores and e-commerce businesses.', 
+            image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop&crop=center', tag: 'Delivery' },
+          { id: 303, name: 'Food & Perishable Delivery', category: 'delivery', price: 'Contact Us', desc: 'Temperature-controlled delivery services for food and perishable items.', 
+            image: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?w=400&h=200&fit=crop&crop=center', tag: 'Delivery' },
+          { id: 304, name: 'Courier & Parcel Services', category: 'delivery', price: 'Contact Us', desc: 'Domestic courier and parcel delivery services with real-time tracking.', 
+            image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=400&h=200&fit=crop&crop=center', tag: 'Delivery' },
+          
+          // Specialized Transport
+          { id: 401, name: 'Luxury Car Rental', category: 'special', price: 'Contact Us', desc: 'Premium car rental services for weddings, corporate events, and special occasions.', 
+            image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=200&fit=crop&crop=center', tag: 'Specialized' },
+          { id: 402, name: 'Refrigerated Transport', category: 'special', price: 'Contact Us', desc: 'Cold chain transport services for pharmaceuticals, food, and temperature-sensitive goods.', 
+            image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&h=200&fit=crop&crop=center', tag: 'Specialized' },
+          { id: 403, name: 'Heavy Equipment Transport', category: 'special', price: 'Contact Us', desc: 'Specialized transport for heavy machinery, construction equipment, and oversized cargo.', 
+            image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=200&fit=crop&crop=center', tag: 'Specialized' },
+          { id: 404, name: 'Fuel & Tanker Services', category: 'special', price: 'Contact Us', desc: 'Safe and compliant transport of fuel, gas, and chemical products.', 
+            image: 'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=400&h=200&fit=crop&crop=center', tag: 'Specialized' },
+        ]
+      }
+    };
+
+    // --- Load products for a service ---
+    function loadProducts(serviceId) {
+      const container = document.getElementById('products-' + serviceId);
+      if (!container) return;
+      const data = productData[serviceId];
+      if (!data) return;
+      
+      container.innerHTML = '';
+      data.products.forEach(p => {
+        const card = createProductCard(p);
+        container.appendChild(card);
+      });
+    }
+
+    // --- Create product card ---
+    function createProductCard(product) {
+      const div = document.createElement('div');
+      div.className = 'product-card';
+      div.dataset.category = product.category;
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x200/0a1f44/0056b3?text=${encodeURIComponent(product.name)}'">
+        <div class="product-info">
+          <span class="product-tag">${product.tag}</span>
+          <h3>${product.name}</h3>
+          <div class="product-price">${product.price}</div>
+          <p class="product-desc">${product.desc}</p>
+          <div class="product-actions">
+            <button class="btn btn-sm buy-btn" data-name="${product.name}">Book Now</button>
+          </div>
+        </div>
+      `;
+      
+      // WhatsApp enquire button
+      const buyBtn = div.querySelector('.buy-btn');
+      buyBtn.addEventListener('click', function() {
+        const name = this.dataset.name;
+        const msg = encodeURIComponent(`Hello Waload Line, I am interested in: ${name}`);
+        window.open(`https://wa.me/2349015799028?text=${msg}`, '_blank');
+      });
+      
+      return div;
+    }
+
+    // --- Filter products by category ---
+    function filterProducts(serviceId, category) {
+      const container = document.getElementById('products-' + serviceId);
+      if (!container) return;
+      const cards = container.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
